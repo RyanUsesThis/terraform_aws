@@ -7,6 +7,6 @@ The information is stored in your home directory in a file called ~/.aws/credent
 
 The contents of the file look like --
 
-\[default\]
-aws_access_key_id = yourKey
+[default]\
+aws_access_key_id = yourKey\
 aws_secret_access_key = yourKey
