@@ -7,3 +7,6 @@ vm_region="us-east-2"
 
 # Main Variables
 vm_ami = "ami-0782e9ee97725263d"
+
+# Key Pair - path to your pem file
+vm_key = "~/.aws/rkn.pem"

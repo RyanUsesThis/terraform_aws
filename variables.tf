@@ -7,3 +7,6 @@ variable "vm_region" {}
 
 # Main variables
 variable "vm_ami" {}
+
+# Key pair for VM SSH
+variable "vm_key" {}

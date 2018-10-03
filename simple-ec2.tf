@@ -4,14 +4,13 @@ resource "aws_vpc" "ec2_test_vpc" {
 }
 
 resource "aws_instance" "ec2_instance" {
-  ami           = "${var.vm_ami}"
-  instance_type = "t2.micro"
-  key_name      = "rkn_str"
-
-  # tags {
-  #   Name = "centos-tf"
-  # }
-  # Networking
-  /*    subnet_id = "subnet-3ac971fa14ea4cdf93670f3c8df1e97e"*/
+  ami             = "${var.vm_ami}"
+  instance_type   = "t2.micro"
   security_groups = ["default"]
+
+  connection {
+    user        = "ubuntu"
+    type        = "ssh"
+    private_key = "${file(var.vm_key)}"
+  }
 }
