@@ -50,7 +50,7 @@ resource "aws_vpc" "test_vpc" {
 # Define public network subnet
 
 resource "aws_subnet" "public-subnet" {
-  vpc_id = "${vaws_vpc.test_vpc.id}"
+  vpc_id = "${aws_vpc.test_vpc.id}"
   cidr_block = "${var.public_subnet_cidr}"
   availability_zone = "us-east-2b"
 
