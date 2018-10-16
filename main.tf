@@ -27,7 +27,19 @@ variable "ami" {
 
 variable "key_path" {
     description = "SSH Public Key Path"
-    default = "/home/rkn/.aws/rkn.pem"
+    default = "~/.ssh/id_rsa.pub"
+}
+
+variable "chef_provision" { 
+  type                      = "map"
+  description               = "Configuration details for chef server"
+
+  default = {
+    server_url              = "https://api.chef.io/organizations/ryanusesthis"
+    user_name               = "ryanusesthis"
+    user_key_path           = "~/.chef/ryanusesthis.pem"
+    recreate_client         = true
+    }
 }
 
 # Specify provider - Amazon Web Services
@@ -39,11 +51,11 @@ provider "aws" {
 # Define virtual private Cloud network
 
 resource "aws_vpc" "test_vpc" {
-  cidr_block         = "${var.vpc_cidr}"
+  cidr_block = "${var.vpc_cidr}"
   enable_dns_support = true
 
   tags {
-    Name = "test_vpc"
+    Name = "Web and Database VPC"
   }
 }
 
@@ -78,10 +90,9 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = "${aws_vpc.test_vpc.id}"
 
   tags {
-    Name = "VPC IGW"
+    Name = "VPC Internet Gateway"
   }
 }
-
 
 # To allow traffics from the public subnet to the internet throught the NAT Gateway, we need to create a new Route Table.
 # # Define the route table
@@ -95,7 +106,7 @@ resource "aws_route_table" "web-public-rt" {
   }
 
   tags {
-    Name = "Public Subnet RT"
+    Name = "Public Subnet Route"
   }
 }
 
@@ -111,8 +122,15 @@ resource "aws_route_table_association" "web-public-rt" {
 # This Security Group allows HTTP/HTTPS and SSH connections from anywhere.
 
 resource "aws_security_group" "sgweb" {
-  name = "vpc_test_web"
+  name = "sg_web"
   description = "Allow incoming http connections & ssh access"
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   ingress {
     from_port = 80
@@ -145,7 +163,7 @@ resource "aws_security_group" "sgweb" {
   vpc_id="${aws_vpc.test_vpc.id}"
 
   tags {
-    Name = "Web Server SG"
+    Name = "Web Security Group"
   }
 }
 
@@ -153,8 +171,15 @@ resource "aws_security_group" "sgweb" {
 # This Security Group enable MySQL 3306 port, ping and SSH only from the public subnet.
 
 resource "aws_security_group" "sgdb" {
-  name = "sg_test_web"
+  name = "sg_web"
   description = "allow traffic from public subnet"
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   ingress {
     from_port = 3306
@@ -180,14 +205,14 @@ resource "aws_security_group" "sgdb" {
   vpc_id = "${aws_vpc.test_vpc.id}"
 
   tags {
-    Name = "DB SG"
+    Name = "Database Security Group"
   }
 }
 
 # Define SSH key pair for SSH connection to instances
 
 resource "aws_key_pair" "default" {
-  key_name = "vpctestkeypair"
+  key_name = "rkn_key"
   public_key = "${file("${var.key_path}")}"
 }
 
@@ -221,4 +246,21 @@ resource "aws_instance" "db" {
   tags {
     Name = "database"
   }
+}
+
+provisioner "chef" {
+  server_url      = "${var.chef_provision.["server_url"]}"
+  user_name       = "${var.chef_provision.["user_name"]}"
+  user_key        = "${file("${var.chef_provision.["user_key_path"]}")}"
+  node_name       = "${var.file_server.["hostname_prefix"]}-${count.index}"
+  run_list        = ["role[fileserver]"]
+  recreate_client = "${var.chef_provision.["recreate_client"]}"
+  on_failure      = "continue"
+  attributes_json = &lt;&lt;-EOF
+  {
+    "tags": [
+      "fileserver"
+    ]
+  }
+  EOF
 }
