@@ -13,4 +13,10 @@ aws_secret_access_key = yourKey
 
 ### SSH access
 
-ssh -i /pathtofile user@iphostname
+ssh -i /path-to-pem-file user@ip-hostname
+
+This config uses an Amazon Linux AMI - default user 'ec2-user'
+
+## Provisioner
+
+In this file I'm usine Chef to provision a simple web server.  The idea is to illustrate how chef provisioner bootstraps the EC2 instance so that you can add in whichever runlists you like.
