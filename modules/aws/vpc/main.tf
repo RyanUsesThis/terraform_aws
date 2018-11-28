@@ -8,7 +8,7 @@ resource "aws_vpc" "main" {
 
   tags {
     Name        = "${var.common_name}-vpc"
-    tf-resource = "${var.common_tag}"
+    tf-group    = "${var.common_tag}"
   }
 }
 

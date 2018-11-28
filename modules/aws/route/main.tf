@@ -13,7 +13,8 @@ resource "aws_route_table" "web-public-rt" {
   }
 
   tags {
-    Name = "${var.common_name}-webroute"
+    Name     = "${var.common_name}-webroute"
+    tf_group = "${var.common_tag}"
   }
 }
 

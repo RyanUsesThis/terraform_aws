@@ -1,7 +1,8 @@
 provider "aws" {
+  version = "1.1"
   ## security & access pulled from ~/.aws/credentials see readme
-  #access_key = "${var.access_key}"
-  #secret_key = "${var.secret_key}"
+  access_key = "${var.aws_access_key}"
+  secret_key = "${var.aws_secret_key}"
   region = "${var.aws_region}"
 }
 
@@ -51,7 +52,7 @@ module "ec2" {
   az                = "${var.az}"
   ami               = "${var.ami}"
   vpc_id            = "${module.vpc.vpc_id}"
-  sg_id             = "${module.security_group.sg_id}"
+  sg_id             = "${list("${module.security_group.sg_id}")}"
   public_subnet_id  = "${module.public_subnets.public_subnet_id}"
   instance_count    = "${var.instance_count}"
   aws_key_path      = "${var.aws_key_path}"
@@ -59,6 +60,6 @@ module "ec2" {
   instance_type     = "${var.instance_type}"
   common_name       = "${var.common_name}"
   common_tag        = "${var.common_tag}"
-  chef_provision    = "${var.chef_provision}"
+  # chef_provision    = "${var.chef_provision}"
 }
 

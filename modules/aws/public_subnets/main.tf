@@ -12,7 +12,8 @@ resource "aws_subnet" "public-subnet" {
   availability_zone = "${var.az}"
 
   tags {
-    Name = "${var.common_name}-public-subnet-${count.index}"
+    Name     = "${var.common_name}-public-subnet-${count.index}"
+    tf_group = "${var.common_tag}"
   }
 }
 

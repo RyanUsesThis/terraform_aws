@@ -1,17 +1,20 @@
 # Define variables for all user input
 
-variable "chef_provision" { 
-  type                      = "map"
-  description               = "Configuration details for chef server"
-  default = {
-    server_url              = "https://api.chef.io/organizations/ryanusesthis"
-    user_name               = "ryanusesthis"
-    user_key_path           = "~/.chef/ryanusesthis.pem"
-    recreate_client         = true
-    }
-}
+# variable "chef_provision" { 
+#   type                      = "map"
+#   description               = "Configuration details for chef server"
+#   default = {
+#     server_url              = "https://api.chef.io/organizations/ryanusesthis"
+#     user_name               = "ryanusesthis"
+#     user_key_path           = "/home/rkn/.chef/ryanusesthis.pem"
+#     recreate_client         = true
+#     }
+# }
 
 ##########################################
+
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
 
 variable "aws_region" {
   default = "us-east-2" #ohio
