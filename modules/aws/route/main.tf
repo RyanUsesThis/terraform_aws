@@ -1,16 +1,23 @@
 variable "common_name" {}
 variable "common_tag" {}
+variable "vpc_id" {}
+variable "igw_id" {}
+variable "public_subnet_id" {}
 
 resource "aws_route_table" "web-public-rt" {
-  vpc_id = "${aws_vpc.web_vpc.id}"
+  vpc_id = "${var.vpc_id}"
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.gw.id}"
+    gateway_id = "${var.igw_id}"
   }
 
   tags {
-    Name        = "${var.common_name}-Public-Subnet-Route"
-    tf-group    = "${var.common_tag}"
+    Name = "${var.common_name}-webroute"
   }
+}
+
+resource "aws_route_table_association" "web-public-rt" {
+  subnet_id      = "${var.public_subnet_id}"
+  route_table_id = "${aws_route_table.web-public-rt.id}"
 }

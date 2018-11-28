@@ -41,12 +41,12 @@ common_tag = "RKN"
 
 ## how many subnets you would like to create
 public_subnet_count = "3"
-private_subnet_count = ""
+#private_subnet_count = ""
 
 ## IP Address CIDR blocks
 vpc_cidr = "10.0.0.0/16"
-public_subnet_cidr = "10.0.1.0/24, 10.0.2.0/24, 10.0.3.0/24"
-private_subnet_cidr = "172.0.1.0/24, 172.0.2.0/24, 172.0.3.0/24"
+public_subnet_cidr = "10.0.1.0/24,10.0.2.0/24,10.0.3.0/24"
+#private_subnet_cidr = "172.0.1.0/24,172.0.2.0/24,172.0.3.0/24"
 
 ## credentials for EC2 access
 aws_private_key = "rkn"

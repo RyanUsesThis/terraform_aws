@@ -1,9 +1,11 @@
 variable "common_name" {}
 variable "common_tag" {}
+variable "vpc_id" {}
 
 resource "aws_security_group" "sgweb" {
   name = "sg_web"
   description = "Allow incoming http connections & ssh access"
+  vpc_id = "${var.vpc_id}"
 
   egress {
     from_port = 0
@@ -44,10 +46,12 @@ resource "aws_security_group" "sgweb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id="${aws_vpc.web_vpc.id}"
-
   tags {
     Name        = "${var.common_name}-webSG"
     tf-group    = "${var.common_tag}"
   }
+}
+
+output "sg_id" {
+  value = "${aws_security_group.sgweb.id}"
 }
