@@ -1,8 +1,5 @@
 # User defined values for all variables.
 
-# aws_access_key = ""
-# aws_secret_key = ""
-
 aws_region =	"us-east-2"	        ##	US East (Ohio)
 # aws_region =	"us-east-1"	        ##	US East (N. Virginia)
 # aws_region =	"us-west-1"	        ##	US West (N. California)
