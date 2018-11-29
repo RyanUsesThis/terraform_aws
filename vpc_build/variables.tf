@@ -13,14 +13,19 @@
 
 ##########################################
 
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
+# variable "aws_access_key" {}
+# variable "aws_secret_key" {}
 
 variable "aws_region" {
   default = "us-east-2" #ohio
 }
+
 variable "az" {
-  default = "us-east-2a,us-east-2b,us-east-2c"
+  default = {
+    zone0 = "us-east-2a"
+    zone1 = "us-east-2b"
+    zone2 = "us-east-2c"
+  }
 }
 variable "instance_type" {
   default = "t2-micro"
@@ -39,7 +44,12 @@ variable "public_subnet_count" {
 # }
 
 variable "vpc_cidr" {}
-variable "public_subnet_cidr" {}
+
+variable "public_subnet_cidr" {
+  type    = "list"
+  default = []
+}
+
 #variable "private_subnet_cidr" {}
 
 variable "aws_private_key" {}

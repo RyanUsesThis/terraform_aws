@@ -1,7 +1,7 @@
 # User defined values for all variables.
 
-aws_access_key = "AKIAJVWW5TYI7UAD7V7A"
-aws_secret_key = "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"
+# aws_access_key = ""
+# aws_secret_key = ""
 
 aws_region =	"us-east-2"	        ##	US East (Ohio)
 # aws_region =	"us-east-1"	        ##	US East (N. Virginia)
@@ -25,7 +25,7 @@ aws_region =	"us-east-2"	        ##	US East (Ohio)
 # aws_region =	"us-gov-west-1"	    ##	AWS GovCloud (US)
 
 ## availability zones
-az = "us-east-2a, us-east-2b, us-east-2c"
+#az = ""
 
 ## for a full list of available instance types go to - https://aws.amazon.com/ec2/instance-types/ 
 instance_type = "t2-micro"
@@ -48,8 +48,8 @@ public_subnet_count = "3"
 
 ## IP Address CIDR blocks
 vpc_cidr = "10.0.0.0/16"
-public_subnet_cidr = "10.0.1.0/24,10.0.2.0/24,10.0.3.0/24"
-#private_subnet_cidr = "172.0.1.0/24,172.0.2.0/24,172.0.3.0/24"
+public_subnet_cidr  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+private_subnet_cidr = ["172.0.1.0/24","172.0.2.0/24","172.0.3.0/24"]
 
 ## credentials for EC2 access
 aws_private_key = "rkn"

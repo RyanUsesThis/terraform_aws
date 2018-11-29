@@ -5,9 +5,10 @@ variable "aws_key_path" {}
 variable "common_name" {}
 variable "common_tag" {}
 variable "instance_count" {}
-variable "vpc_id" {}
 variable "public_subnet_id" {}
-variable "az" {}
+variable "az" {
+  type = "map"
+}
 variable "sg_id" {
   type = "list"
 }
@@ -17,13 +18,12 @@ variable "sg_id" {
 
 resource "aws_instance" "public-ec2" {
   count                       = "${var.instance_count}"
-  availability_zone           = "${var.az}"
+  availability_zone           = "${lookup(var.az, "zone${count.index}")}"
   ami                         = "${var.ami}"
-  #vpc_id                      = "${var.vpc_id}"
   instance_type               = "${var.instance_type}"
   key_name                    = "${var.aws_private_key}"
-  subnet_id                   = "${var.public_subnet_id}"        ## figure out how to assign via count.index
-  vpc_security_group_ids      = ["${var.sg_id}"]                   ## figure out how to assign via count.index
+  subnet_id                   = "${var.public_subnet_id[count.index]}"
+  vpc_security_group_ids      = ["${var.sg_id}"]
   associate_public_ip_address = true
   source_dest_check           = false
 
