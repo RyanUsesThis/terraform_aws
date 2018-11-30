@@ -1,5 +1,5 @@
 provider "aws" {
-  version = "1.1"
+  # version = "1.1"
   ## security & access pulled from ~/.aws/credentials
   # access_key = "${var.aws_access_key}"
   # secret_key = "${var.aws_secret_key}"
@@ -52,7 +52,7 @@ module "ec2" {
   az                = "${var.az}"
   ami               = "${var.ami}"
   sg_id             = "${list("${module.security_group.sg_id}")}"
-  public_subnet_id  = "${list("${module.public_subnets.public_subnet_id}")}"
+  public_subnet_id  = "${module.public_subnets.public_subnet_id}"
   instance_count    = "${var.instance_count}"
   aws_key_path      = "${var.aws_key_path}"
   aws_private_key   = "${var.aws_private_key}"

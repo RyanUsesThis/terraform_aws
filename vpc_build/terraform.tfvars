@@ -25,7 +25,7 @@ aws_region =	"us-east-2"	        ##	US East (Ohio)
 #az = ""
 
 ## for a full list of available instance types go to - https://aws.amazon.com/ec2/instance-types/ 
-instance_type = "t2-micro"
+instance_type = "t2.micro"
 
 ## AMI images are region specific
 ami = "ami-0b59bfac6be064b78"
@@ -34,7 +34,7 @@ ami = "ami-0b59bfac6be064b78"
 instance_count = "3"
 
 ## common_name will be interpolated at the module to create the resource name, ie: NAME-ec2-1, NAME-vpc, etc
-common_name = "rkn"
+common_name = "TERRAFORM"
 
 ## common tag to search for resources within AWS.
 common_tag = "RKN"

@@ -5,7 +5,9 @@ variable "aws_key_path" {}
 variable "common_name" {}
 variable "common_tag" {}
 variable "instance_count" {}
-variable "public_subnet_id" {}
+variable "public_subnet_id" {
+  type = "list"
+}
 variable "az" {
   type = "map"
 }
