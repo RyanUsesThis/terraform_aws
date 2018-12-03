@@ -62,3 +62,8 @@ module "ec2" {
   # chef_provision    = "${var.chef_provision}"
 }
 
+module "resource_group" {
+  source        = "../modules/aws/resource_group"
+  common_tag    = "${var.common.tag}"
+  common_name   = "${var.common_name}"
+}
