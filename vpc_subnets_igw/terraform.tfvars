@@ -6,7 +6,7 @@ aws_region =	"us-east-2"	        ##	US East (Ohio)
 #az = ""
 
 ## common_name will be interpolated at the module to create the resource name, ie: NAME-ec2-1, NAME-vpc, etc
-common_name = "ATEME-TITAN-TEST"
+common_name = "ATEME"
 
 ## common tag to search for resources within AWS.
 common_tag = "RNJK"

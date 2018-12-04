@@ -42,9 +42,3 @@ module "public_subnet_route" {
   common_name       = "${var.common_name}"
   common_tag        = "${var.common_tag}"
 }
-
-module "resource_group" {
-  source        = "../modules/aws/resource_group"
-  common_tag    = "${var.common_tag}"
-  common_name   = "${var.common_name}"
-}
